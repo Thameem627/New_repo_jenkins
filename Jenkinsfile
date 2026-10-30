@@ -12,9 +12,9 @@ pipeline {
         steps {
           echo "cloning repo"
           git branch: "${params.BRANCH_NAME}",
-            url: 
-          chekout scm
+            url: https://github.com/Thameem627/New_repo_jenkins.git
         }
+      }
 
       
       stage("build with params") {
