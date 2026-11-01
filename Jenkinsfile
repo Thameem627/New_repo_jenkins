@@ -26,7 +26,7 @@ pipeline {
             steps {
                 git (
                     url: 'https://github.com/Thameem627/New_repo_jenkins.git'
-                    branch: "${params.BRANCH_NAME}"
+                    branch: '${params.BRANCH_NAME}'
                 )
             }
         }
