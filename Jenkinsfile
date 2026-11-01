@@ -1,11 +1,8 @@
 pipeline {
-  agent any
-  options {
-    timeout (time: 30, unit: 'MINUTES')
-    timestamps ()
-  }
+    agent any
+
     parameters {
-      string(
+        string(
             name: 'BRANCH_NAME',
             defaultValue: 'main',
             description: 'Enter the Git branch to build'
@@ -17,29 +14,35 @@ pipeline {
             description: 'Select the deployment environment'
         )
     }
-    stages {
-      stage('checkout') {
-        steps {
-          echo "cloning repo"
-          git branch: "${params.BRANCH_NAME}",
-            url: 'https://github.com/Thameem627/New_repo_jenkins.git'
-        }
-      }
 
-      stage('Precheck') {
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+        timestamps()
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: "${params.BRANCH_NAME}",
+                    url: 'https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git'
+            }
+        }
+
+        stage('Precheck') {
             steps {
                 echo "Pipeline is targeting the ${params.BUILD_ENV} environment."
             }
         }
 
-      
-      stage('build and test') {
-        steps {
-          sh 'mvn --version'
-          sh 'mvn clean package'
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
         }
-      }
-      post {
+    }
+
+    post {
         success {
             archiveArtifacts artifacts: 'target/*.jar',
                              fingerprint: true
@@ -48,8 +51,5 @@ pipeline {
         failure {
             cleanWs()
         }
-      }
     }
 }
-          
-  
