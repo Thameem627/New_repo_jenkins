@@ -2,11 +2,11 @@ pipeline {
   agent any
   options {
     timeout (time: 30, unit: 'MINUTES')
-    timestamp()
+    timestamps ()
   }
     parameters {
-      string (name: 'BRANCH_NAME', defaultvalue: 'main', description: 'Enter the git branch to build' )
-      choices (name: 'BUILD_ENV',deafaultvalue: 'DEV', 'STAGING', 'PROD', description: 'Select the deployment environment' )
+      string (name: 'BRANCH_NAME', defaultValue: 'main', description: 'Enter the git branch to build' )
+      choice (name: 'BUILD_ENV', defaultValue: 'DEV', 'STAGING', 'PROD', description: 'Select the deployment environment' )
     }
     stages {
       stage('checkout') {
