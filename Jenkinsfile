@@ -5,8 +5,17 @@ pipeline {
     timestamps ()
   }
     parameters {
-      string (name: 'BRANCH_NAME', defaultValue: 'main', description: 'Enter the git branch to build' )
-      choice (name: 'BUILD_ENV', defaultValue: 'DEV', 'STAGING', 'PROD', description: 'Select the deployment environment' )
+      string(
+            name: 'BRANCH_NAME',
+            defaultValue: 'main',
+            description: 'Enter the Git branch to build'
+        )
+
+        choice(
+            name: 'BUILD_ENV',
+            choices: ['dev', 'staging', 'prod'],
+            description: 'Select the deployment environment'
+        )
     }
     stages {
       stage('checkout') {
