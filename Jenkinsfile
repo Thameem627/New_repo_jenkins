@@ -7,8 +7,9 @@ pipeline {
     parameters {
       string (name: 'BRANCH_NAME', defaultvalue: 'main', description: 'Enter the git branch to build' )
       choices (name: 'BUILD_ENV',deafaultvalue: 'DEV', 'STAGING', 'PROD', description: 'Select the deployment environment' )
+    }
     stages {
-      stage("checkout") {
+      stage('checkout') {
         steps {
           echo "cloning repo"
           git branch: "${params.BRANCH_NAME}",
@@ -16,8 +17,30 @@ pipeline {
         }
       }
 
+      stage('Precheck') {
+            steps {
+                echo "Pipeline is targeting the ${params.BUILD_ENV} environment."
+            }
+        }
+
       
-      stage("build with params") {
+      stage('build and test') {
         steps {
+          sh 'mvn --version'
+          sh 'mvn clean package'
+        }
+      }
+      post {
+        success {
+            archiveArtifacts artifacts: 'target/*.jar',
+                             fingerprint: true
+        }
+
+        failure {
+            cleanWs()
+        }
+      }
+    }
+}
           
   
