@@ -25,7 +25,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: "${params.BRANCH_NAME}",
-                    url: 'https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git'
+                    url: 'https://github.com/Thameem627/New_repo_jenkins.git'
             }
         }
 
