@@ -24,9 +24,10 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git (
+                git(
+                    branch: params.BRANCH_NAME,
                     url: 'https://github.com/Thameem627/New_repo_jenkins.git'
-                    branch: '${params.BRANCH_NAME}'
+                    
                 )
             }
         }
